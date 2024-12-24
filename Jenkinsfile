@@ -29,12 +29,6 @@ pipeline {
         }
 
         stage('Build & Push Docker') {
-            when {
-                expression {
-                    def branch = sh(script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
-                    return branch == 'main' || branch == 'master'
-                }
-            }
             steps {
                 script {
                     // Логинимся в Docker Hub
