@@ -30,7 +30,7 @@ pipeline {
 
         stage('Build & Push Docker') {
             when {
-                expression { return env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'master' }
+                expression { return env.GIT_BRANCH == 'main' || env.GIT_BRANCH == 'master' }
             }
             steps {
                 script {
@@ -47,7 +47,7 @@ pipeline {
                 }
             }
         }
-        
+
 
         stage('Deploy') {
             steps {
