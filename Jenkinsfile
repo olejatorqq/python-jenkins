@@ -30,14 +30,17 @@ pipeline {
 
         stage('Build & Push Docker') {
             when {
-                expression { return env.GIT_BRANCH == 'main' || env.GIT_BRANCH == 'master' }
+                expression {
+                    def branch = sh(script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
+                    return branch == 'main' || branch == 'master'
+                }
             }
             steps {
                 script {
                     // Логинимся в Docker Hub
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-creds',
-                                                      usernameVariable: 'DOCKER_USER',
-                                                      passwordVariable: 'DOCKER_PASS')]) {
+                                                    usernameVariable: 'DOCKER_USER',
+                                                    passwordVariable: 'DOCKER_PASS')]) {
                         sh "echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin"
                     }
                     // Собираем образ
@@ -47,6 +50,7 @@ pipeline {
                 }
             }
         }
+
 
 
         stage('Deploy') {
