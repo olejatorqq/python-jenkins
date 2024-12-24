@@ -24,7 +24,7 @@ pipeline {
         
         stage('Test') {
             steps {
-                sh 'pytest --maxfail=1 --disable-warnings'
+                sh 'python3 -m pytest --maxfail=1 --disable-warnings'
             }
         }
 
