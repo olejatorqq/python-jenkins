@@ -16,12 +16,12 @@ pipeline {
         stage('Install') {
             steps {
                 sh """
-                    python3 -m pip install --upgrade pip
+                    python3 -m pip3 install --upgrade pip
                     pip3 install -r requirements.txt
                 """
             }
         }
-         
+        
         stage('Test') {
             steps {
                 sh 'pytest --maxfail=1 --disable-warnings'
