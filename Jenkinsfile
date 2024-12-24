@@ -21,7 +21,7 @@ pipeline {
                 """
             }
         }
-
+         
         stage('Test') {
             steps {
                 sh 'pytest --maxfail=1 --disable-warnings'
